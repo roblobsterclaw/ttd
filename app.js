@@ -1,9 +1,9 @@
-const STORAGE_KEY = 'jfl-ttd-dashboard-state-v2';
-const ARCHIVE_KEY = 'jfl-ttd-dashboard-archive-v2';
+const STORAGE_KEY = 'jfl-ttd-dashboard-state-v3';
+const ARCHIVE_KEY = 'jfl-ttd-dashboard-archive-v3';
 
 const defaultData = {
-  version: '3.9',
-  lastUpdated: '2026-04-22T11:32:00-04:00',
+  version: '4.2',
+  lastUpdated: '2026-04-22T16:35:00-04:00',
   zones: []
 };
 
@@ -481,12 +481,11 @@ function wireEvents() {
 }
 
 async function init() {
-  const { stored, archive } = loadStoredState();
+  const { archive } = loadStoredState();
   state.archive = Array.isArray(archive) ? archive : [];
-  state.data = stored || await loadData();
-  if (!stored) {
-    saveState();
-  }
+  // ALWAYS fetch the server JSON first, then merge localStorage on top
+  state.data = await loadData();
+  saveState();
   wireEvents();
   render();
   registerServiceWorker();
