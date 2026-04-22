@@ -1,6 +1,6 @@
 {
   "version": "4.2",
-  "lastUpdated": "2026-04-22T16:00:00-04:00",
+  "lastUpdated": "2026-04-22T16:00:43-04:00",
   "zones": [
     {
       "id": "fire",
@@ -26,6 +26,7 @@
       "items": [
         { "id": "joey-young-spreadsheet", "text": "Joey Young spreadsheet [WAITING] (commission + inventory)", "priority": "waiting", "status": "open" },
         { "id": "tariff-pricing-review", "text": "Tariff pricing hold and margin watch", "priority": "pending", "status": "open" },
+        { "id": "certificate-of-compliance", "text": "Certificate of Compliance + $150 fee for Phil Reed", "priority": "pending", "status": "open" },
         { "id": "epicor-minmax", "text": "Epicor Min/Max system — Edwin + Joey leading", "priority": "pending", "status": "open" },
         { "id": "surf-city-audit", "text": "Surf City margin audit in Epicor (Paul)", "priority": "pending", "status": "open" },
         { "id": "neal-denise-prospecting", "text": "Neal/Denise follow-up", "priority": "pending", "status": "open" },
@@ -42,7 +43,6 @@
         { "id": "pmk-invoice", "text": "PMK invoice $13,750 — pay from JLKL TD Bank", "priority": "urgent", "status": "open" },
         { "id": "mike-plumber-schedule", "text": "Schedule Mike the plumber (Code Official walk-through)", "priority": "urgent", "status": "open" },
         { "id": "hvac-contractor", "text": "HVAC: finalize contractor (furnace + heat pump)", "priority": "pending", "status": "open" },
-        { "id": "phil-reed-certificate", "text": "Phil Reed: Certificate of Compliance + $150 fee", "priority": "pending", "status": "open" },
         { "id": "matty-electrical-work", "text": "Matty electrical work", "priority": "pending", "status": "open" },
         { "id": "historic-tax-credit", "text": "Historic tax credit (National Register) — CPA review", "priority": "pending", "status": "open" },
         { "id": "section-47-tax-credit", "text": "Section 47 tax credit research", "priority": "pending", "status": "open" }

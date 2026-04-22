@@ -351,12 +351,61 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+function exportBackup() {
+  const backup = {
+    exportedAt: new Date().toISOString(),
+    version: state.data.version,
+    data: state.data,
+    archive: state.archive
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `jfl-ttd-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importBackup() {
+  document.getElementById('import-file').click();
+}
+
+function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (!backup.data || !backup.data.zones) {
+        alert('Invalid backup file — missing TTD data.');
+        return;
+      }
+      if (!confirm(`Restore backup from ${backup.exportedAt || 'unknown date'}? This will replace your current dashboard.`)) return;
+      state.data = backup.data;
+      state.archive = Array.isArray(backup.archive) ? backup.archive : [];
+      saveState();
+      render();
+      alert('Backup restored successfully!');
+    } catch {
+      alert('Could not read backup file. Make sure it\'s a valid TTD backup JSON.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
 function wireEvents() {
   els.addButton.addEventListener('click', addItem);
   els.newItemText.addEventListener('keydown', event => {
     if (event.key === 'Enter') addItem();
   });
   els.clearDoneButton.addEventListener('click', clearArchive);
+  document.getElementById('export-btn').addEventListener('click', exportBackup);
+  document.getElementById('import-btn').addEventListener('click', importBackup);
+  document.getElementById('import-file').addEventListener('change', handleImport);
 }
 
 async function init() {
