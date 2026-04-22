@@ -46,7 +46,7 @@ function loadStoredState() {
 async function loadData() {
   const fallback = defaultDataFromTemplate();
   if (location.protocol === 'file:') {
-    return mergeStoredData(fallback, fallback);
+    return mergeStoredData(fallback);
   }
 
   try {
@@ -55,7 +55,7 @@ async function loadData() {
     const data = await response.json();
     return mergeStoredData(data, fallback);
   } catch {
-    return mergeStoredData(fallback, fallback);
+    return mergeStoredData(fallback);
   }
 }
 
@@ -64,16 +64,40 @@ function defaultDataFromTemplate() {
   return { version: '4.0', lastUpdated: '2026-04-22T14:45:00-04:00', zones: [] };
 }
 
-function mergeStoredData(data, fallback) {
-  const storedPayload = loadStoredState().stored;
-  const merged = clone(data || fallback || defaultDataFromTemplate());
+function mergeStoredData(data, fallback = defaultDataFromTemplate()) {
+  const { stored } = loadStoredState();
+  const base = clone(data || fallback);
 
-  if (storedPayload?.version) merged.version = storedPayload.version;
-  if (storedPayload?.lastUpdated) merged.lastUpdated = storedPayload.lastUpdated;
-  if (Array.isArray(storedPayload?.zones) && storedPayload.zones.length) {
-    merged.zones = storedPayload.zones;
-  }
+  if (!stored) return base;
 
+  const merged = clone(base);
+  merged.version = stored.version || merged.version;
+  merged.lastUpdated = stored.lastUpdated || merged.lastUpdated;
+
+  const storedZones = Array.isArray(stored.zones) ? stored.zones : [];
+  const mergedZones = merged.zones.map(defaultZone => {
+    const storedZone = storedZones.find(zone => zone.id === defaultZone.id);
+    if (!storedZone) return defaultZone;
+
+    const storedItems = Array.isArray(storedZone.items) ? storedZone.items : [];
+    const defaultItems = Array.isArray(defaultZone.items) ? defaultZone.items : [];
+    const items = defaultItems.map(defaultItem => {
+      const storedItem = storedItems.find(item => item.id === defaultItem.id);
+      return storedItem ? { ...defaultItem, ...storedItem } : defaultItem;
+    });
+
+    storedItems.forEach(storedItem => {
+      if (!items.some(item => item.id === storedItem.id)) items.push(storedItem);
+    });
+
+    return { ...defaultZone, ...storedZone, items };
+  });
+
+  storedZones.forEach(storedZone => {
+    if (!mergedZones.some(zone => zone.id === storedZone.id)) mergedZones.push(storedZone);
+  });
+
+  merged.zones = mergedZones;
   return merged;
 }
 

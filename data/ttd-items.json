@@ -1,6 +1,6 @@
 {
-  "version": "4.0",
-  "lastUpdated": "2026-04-22T14:45:00-04:00",
+  "version": "4.1",
+  "lastUpdated": "2026-04-22T15:56:00-04:00",
   "zones": [
     {
       "id": "fire",
@@ -15,7 +15,8 @@
         { "id": "brad-architect-email", "text": "Brad architect email Thursday", "priority": "pending", "status": "open" },
         { "id": "lobster-press-buffer", "text": "Lobster Press: Buffer acct + forwarding rule (Joe action)", "priority": "pending", "status": "open" },
         { "id": "rebolt-patent-decision", "text": "ReBolt provisional patent — go/no-go decision needed", "priority": "pending", "status": "open" },
-        { "id": "unicorn-scout-review", "text": "Unicorn Scout findings ready — review AI biz ideas", "priority": "pending", "status": "open" }
+        { "id": "unicorn-scout-review", "text": "Unicorn Scout findings ready — review AI biz ideas", "priority": "pending", "status": "open" },
+        { "id": "cancel-claude-max", "text": "Cancel Claude Max $200/mo plan", "priority": "urgent", "status": "open" }
       ]
     },
     {
@@ -28,7 +29,9 @@
         { "id": "epicor-minmax", "text": "Epicor Min/Max system — Edwin + Joey leading", "priority": "pending", "status": "open" },
         { "id": "surf-city-audit", "text": "Surf City margin audit in Epicor (Paul)", "priority": "pending", "status": "open" },
         { "id": "neal-denise-prospecting", "text": "Neal/Denise follow-up", "priority": "pending", "status": "open" },
-        { "id": "obx-pipeline", "text": "OBX pipeline — zero new rentals Jan-Feb, investigate", "priority": "pending", "status": "open" }
+        { "id": "obx-pipeline", "text": "OBX pipeline — zero new rentals Jan-Feb, investigate", "priority": "pending", "status": "open" },
+        { "id": "surf-city-fb-marketplace", "text": "Surf City: Monitor FB Marketplace for Buddy Lynch (Rob/Hermes via API)", "priority": "pending", "status": "open" },
+        { "id": "list-generator-switch", "text": "List generator switch (basement) on FB Marketplace", "priority": "pending", "status": "open" }
       ]
     },
     {
@@ -70,7 +73,19 @@
         { "id": "truck-key-rings", "text": "Key rings [WAITING ON LJ] (5 rings organized)", "priority": "waiting", "status": "open" },
         { "id": "juliana-summer-job", "text": "Jules: summer waitressing job plan — talk to her", "priority": "pending", "status": "open" },
         { "id": "bella-openclaw-setup", "text": "Bella: set up her OpenClaw + AI education", "priority": "pending", "status": "open" },
-        { "id": "voice-clone-renee", "text": "Rob Lobster voice clone — talk to Renee first", "priority": "waiting", "status": "open" }
+        { "id": "voice-clone-renee", "text": "Rob Lobster voice clone — talk to Renee first", "priority": "waiting", "status": "open" },
+        { "id": "joe-sensi-friday", "text": "Joe Sensi visit — Friday 1:00 PM", "priority": "urgent", "status": "open" }
+      ]
+    },
+    {
+      "id": "lobster-press",
+      "title": "LOBSTER PRESS",
+      "emoji": "🦞",
+      "items": [
+        { "id": "lobster-press-inbox", "text": "PRESS emails / content intake", "priority": "urgent", "status": "open" },
+        { "id": "lobster-press-content", "text": "Lobster Press content creation", "priority": "pending", "status": "open" },
+        { "id": "lobster-press-boom-truck", "text": "TLC \"Lobster Press\" boom truck Facebook post", "priority": "pending", "status": "open" },
+        { "id": "lobster-press-pipeline", "text": "Social media pipeline / draft queue", "priority": "pending", "status": "open" }
       ]
     },
     {
@@ -79,26 +94,10 @@
       "emoji": "🚀",
       "items": [
         { "id": "rebolt-renders", "text": "ReBolt renders", "priority": "pending", "status": "open" },
-        { "id": "rebolt-patent", "text": "ReBolt: provisional patent filing ($12-23K budget)", "priority": "pending", "status": "open" },
-        { "id": "elevenlabs-voice", "text": "ElevenLabs voice setup + voice plugin on Mac", "priority": "pending", "status": "open" },
-        { "id": "world-cup-pool", "text": "World Cup Pool — TeamStake $25 update", "priority": "pending", "status": "open" },
-        { "id": "corner-market", "text": "Corner Market 275 W 9th — deal next step?", "priority": "pending", "status": "open" },
-        { "id": "colorant-reentry", "text": "Colorant industry re-entry — timing decision", "priority": "pending", "status": "open" },
-        { "id": "t1d-app", "text": "T1D App: Dexcom-Oura integration (90-day build)", "priority": "pending", "status": "open" }
-      ]
-    },
-    {
-      "id": "lobster-press",
-      "title": "LOBSTER PRESS",
-      "emoji": "🦞",
-      "items": [
-        { "id": "lp-buffer-account", "text": "Set up Buffer account ($60-70/mo)", "priority": "pending", "status": "open" },
-        { "id": "lp-outlook-forwarding", "text": "Outlook forwarding rule: socialmedia@tlcnj.com → Rob", "priority": "pending", "status": "open" },
-        { "id": "lp-admin-access", "text": "Admin access to all social accounts", "priority": "pending", "status": "open" },
-        { "id": "lp-logos-handles", "text": "Logos + handles for TLC, Surfbox, Keli Realtor", "priority": "pending", "status": "open" },
-        { "id": "lp-dashboard-build", "text": "Lobster Press dashboard build (Hermes)", "priority": "pending", "status": "open" },
-        { "id": "lp-video-per-store", "text": "One video per store per week — April 30 go-live", "priority": "urgent", "status": "open" },
-        { "id": "lp-three-brands", "text": "Three brands: TLC, Surfbox, Keli Realtor", "priority": "pending", "status": "open" }
+        { "id": "provisional-patent", "text": "Provisional patent", "priority": "pending", "status": "open" },
+        { "id": "elevenlabs-voice", "text": "ElevenLabs voice setup", "priority": "pending", "status": "open" },
+        { "id": "voice-clone", "text": "Voice clone (TALK TO RENEE FIRST)", "priority": "waiting", "status": "open" },
+        { "id": "world-cup-pool", "text": "World Cup Pool — TeamStake $25 update", "priority": "pending", "status": "open" }
       ]
     }
   ]
