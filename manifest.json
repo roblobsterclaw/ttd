@@ -1,0 +1,10 @@
+{
+  "name": "JFL TTD Dashboard",
+  "short_name": "TTD",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0D1117",
+  "theme_color": "#0D1117",
+  "icons": []
+}

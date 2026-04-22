@@ -1,0 +1,75 @@
+{
+  "version": "3.9",
+  "lastUpdated": "2026-04-22T11:32:00-04:00",
+  "zones": [
+    {
+      "id": "fire",
+      "title": "ON FIRE THIS WEEK",
+      "emoji": "🔥",
+      "items": [
+        { "id": "april-30-portfolio-execution", "text": "April 30 portfolio execution (8 days)", "priority": "urgent", "status": "open" },
+        { "id": "surfbox-social-launch", "text": "Surfbox social media launch (8 days)", "priority": "urgent", "status": "open" },
+        { "id": "brad-architect-email", "text": "Brad architect email (Thursday)", "priority": "urgent", "status": "open" },
+        { "id": "joey-young-spreadsheet", "text": "Joey Young spreadsheet [WAITING]", "priority": "waiting", "status": "open" }
+      ]
+    },
+    {
+      "id": "tlc-surfbox",
+      "title": "TLC / SURFBOX",
+      "emoji": "🪵",
+      "items": [
+        { "id": "surfbox-go-live-prep", "text": "Surfbox go-live prep", "priority": "pending", "status": "open" },
+        { "id": "tariff-pricing-review", "text": "Tariff pricing review", "priority": "pending", "status": "open" },
+        { "id": "joey-young-spreadsheet-2", "text": "Joey Young spreadsheet [WAITING]", "priority": "waiting", "status": "open" },
+        { "id": "surf-city-audit", "text": "Surf City audit", "priority": "pending", "status": "open" },
+        { "id": "neal-denise-prospecting", "text": "Neal/Denise prospecting check-in", "priority": "pending", "status": "open" }
+      ]
+    },
+    {
+      "id": "firehouse",
+      "title": "FIREHOUSE — 18 NEW ST",
+      "emoji": "🏗️",
+      "items": [
+        { "id": "mike-plumber-followup", "text": "Mike plumber follow-up", "priority": "pending", "status": "open" },
+        { "id": "brad-architect-coordination", "text": "Brad architect coordination", "priority": "pending", "status": "open" },
+        { "id": "certificate-of-compliance", "text": "Certificate of Compliance", "priority": "pending", "status": "open" },
+        { "id": "matty-electrical-work", "text": "Matty electrical work", "priority": "pending", "status": "open" },
+        { "id": "section-47-tax-credit", "text": "Section 47 tax credit research", "priority": "pending", "status": "open" }
+      ]
+    },
+    {
+      "id": "investing",
+      "title": "INVESTING — JFL&KL FUND",
+      "emoji": "💰",
+      "items": [
+        { "id": "april-30-execution", "text": "April 30 execution — 8 day countdown", "priority": "urgent", "status": "open" },
+        { "id": "macarthur-w2-roth-401k", "text": "MacArthur W-2/Roth 401k discussion", "priority": "pending", "status": "open" },
+        { "id": "sp-monitoring", "text": "S&P monitoring vs exit baseline (6,591.90)", "priority": "pending", "status": "open" }
+      ]
+    },
+    {
+      "id": "family",
+      "title": "FAMILY / PERSONAL",
+      "emoji": "🏠",
+      "items": [
+        { "id": "gio-225-check", "text": "Gio $225 check (TEXT TOMMY)", "priority": "pending", "status": "open" },
+        { "id": "jersey-appliance", "text": "Jersey Appliance call 609-918-1830", "priority": "pending", "status": "open" },
+        { "id": "truck-key-rings", "text": "Truck key rings [WAITING ON LJ]", "priority": "waiting", "status": "open" },
+        { "id": "juliana-summer-job", "text": "Juliana summer job planning", "priority": "pending", "status": "open" },
+        { "id": "bella-openclaw-setup", "text": "Bella OpenClaw setup", "priority": "pending", "status": "open" }
+      ]
+    },
+    {
+      "id": "projects",
+      "title": "PROJECTS / VENTURES",
+      "emoji": "🚀",
+      "items": [
+        { "id": "rebolt-renders", "text": "ReBolt renders", "priority": "pending", "status": "open" },
+        { "id": "provisional-patent", "text": "Provisional patent", "priority": "pending", "status": "open" },
+        { "id": "elevenlabs-voice", "text": "ElevenLabs voice setup", "priority": "pending", "status": "open" },
+        { "id": "voice-clone", "text": "Voice clone (TALK TO RENEE FIRST)", "priority": "waiting", "status": "open" },
+        { "id": "world-cup-pool", "text": "World Cup Pool — TeamStake $25 update", "priority": "pending", "status": "open" }
+      ]
+    }
+  ]
+}

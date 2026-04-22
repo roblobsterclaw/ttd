@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0D1117" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>JFL TTD — Dashboard</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">🦞 Joe Lynch command center</div>
+        <h1>JFL TTD Dashboard</h1>
+        <p class="subtitle">Live companion to the printed TTD. Tap to complete, add new items, and keep the day moving.</p>
+      </div>
+      <div class="topbar-meta">
+        <div class="meta-pill" id="version-pill">v3.9</div>
+        <div class="meta-pill" id="updated-pill">Updated —</div>
+        <div class="meta-pill" id="storage-pill">Local-first</div>
+      </div>
+    </header>
+
+    <section class="control-panel">
+      <div class="control-group control-group-wide">
+        <label for="new-item-text">Quick add</label>
+        <input id="new-item-text" type="text" placeholder="Add a new TTD item..." maxlength="180" />
+      </div>
+      <div class="control-group">
+        <label for="new-item-zone">Zone</label>
+        <select id="new-item-zone"></select>
+      </div>
+      <div class="control-group">
+        <label for="new-item-priority">Priority</label>
+        <select id="new-item-priority">
+          <option value="pending">Pending</option>
+          <option value="urgent">Urgent</option>
+          <option value="waiting">Waiting</option>
+        </select>
+      </div>
+      <div class="control-group control-group-button">
+        <label>&nbsp;</label>
+        <button id="add-item-btn" type="button">Add item</button>
+      </div>
+    </section>
+
+    <section class="stats-row">
+      <div class="stat-card"><span id="open-count">0</span><small>Open</small></div>
+      <div class="stat-card"><span id="urgent-count">0</span><small>Urgent</small></div>
+      <div class="stat-card"><span id="done-count">0</span><small>Done today</small></div>
+      <div class="stat-card"><span id="blocked-count">0</span><small>Waiting</small></div>
+    </section>
+
+    <main class="dashboard-grid" id="dashboard-grid" aria-live="polite"></main>
+
+    <section class="archive-panel">
+      <div class="section-header">
+        <div>
+          <h2>Done archive</h2>
+          <p>Completed items stay here with a completion stamp.</p>
+        </div>
+        <button id="clear-done-btn" class="ghost-button" type="button">Clear archive</button>
+      </div>
+      <div id="archive-list" class="archive-list"></div>
+    </section>
+  </div>
+
+  <template id="zone-template">
+    <section class="zone-card">
+      <header class="zone-header">
+        <div>
+          <div class="zone-emoji"></div>
+          <h2 class="zone-title"></h2>
+        </div>
+        <div class="zone-count"></div>
+      </header>
+      <ul class="item-list"></ul>
+    </section>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
