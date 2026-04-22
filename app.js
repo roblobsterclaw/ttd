@@ -26,6 +26,9 @@ const els = {
   newItemText: document.getElementById('new-item-text'),
   newItemPriority: document.getElementById('new-item-priority'),
   addButton: document.getElementById('add-item-btn'),
+  backupButton: document.getElementById('backup-btn'),
+  restoreButton: document.getElementById('restore-btn'),
+  backupFileInput: document.getElementById('backup-file-input'),
   clearDoneButton: document.getElementById('clear-done-btn')
 };
 
@@ -175,14 +178,17 @@ function renderItem(zoneId, item) {
       <div class="item-meta">${priorityBadge(item)}${metaBits.map(bit => `<span class="badge">${escapeHtml(bit)}</span>`).join('')}</div>
     </div>
     <div class="item-actions">
+      <button class="small-button edit-btn" type="button">✏️</button>
       <button class="small-button" type="button">Move</button>
       <button class="small-button delete-btn" type="button">✕</button>
     </div>
   `;
 
-  const [checkButton, moveButton, deleteButton] = li.querySelectorAll('button');
+  const buttons = li.querySelectorAll('button');
+  const [checkButton, editButton, moveButton, deleteButton] = buttons;
   checkButton.addEventListener('click', () => toggleItem(zoneId, item.id));
-  moveButton.addEventListener('click', (e) => cycleZone(zoneId, item.id, e));
+  if (editButton) editButton.addEventListener('click', () => editItem(zoneId, item.id, li));
+  if (moveButton) moveButton.addEventListener('click', (e) => cycleZone(zoneId, item.id, e));
   if (deleteButton) deleteButton.addEventListener('click', () => deleteItem(zoneId, item.id));
   return li;
 }
@@ -328,6 +334,72 @@ function addItem() {
   els.newItemText.value = '';
   els.newItemPriority.value = 'pending';
   touchState();
+}
+
+function editItem(zoneId, itemId, li) {
+  const { item } = findItem(zoneId, itemId);
+  if (!item) return;
+  const textEl = li.querySelector('.item-text');
+  if (!textEl) return;
+
+  // Replace text with an input field
+  const currentText = item.text;
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = currentText;
+  input.maxLength = 180;
+  input.className = 'edit-input';
+  textEl.replaceWith(input);
+  input.focus();
+  input.select();
+
+  // Also add a priority selector
+  const prioritySelect = document.createElement('select');
+  prioritySelect.className = 'edit-priority';
+  ['pending', 'urgent', 'waiting'].forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p;
+    opt.textContent = p.charAt(0).toUpperCase() + p.slice(1);
+    if (p === item.priority) opt.selected = true;
+    prioritySelect.appendChild(opt);
+  });
+
+  const saveBtn = document.createElement('button');
+  saveBtn.textContent = 'Save';
+  saveBtn.className = 'small-button save-edit-btn';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.className = 'small-button';
+
+  const editRow = document.createElement('div');
+  editRow.className = 'edit-row';
+  editRow.appendChild(prioritySelect);
+  editRow.appendChild(saveBtn);
+  editRow.appendChild(cancelBtn);
+  input.parentNode.insertBefore(editRow, input.nextSibling);
+
+  function save() {
+    const newText = input.value.trim();
+    if (newText) {
+      item.text = newText;
+      item.priority = prioritySelect.value;
+      touchState();
+    } else {
+      render();
+    }
+  }
+
+  function cancel() {
+    render();
+  }
+
+  saveBtn.addEventListener('click', save);
+  cancelBtn.addEventListener('click', cancel);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') save();
+    if (e.key === 'Escape') cancel();
+  });
 }
 
 function deleteItem(zoneId, itemId) {

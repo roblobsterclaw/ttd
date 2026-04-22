@@ -63,13 +63,16 @@
           <h2>Done archive</h2>
           <p>Completed items stay here with a completion stamp.</p>
         </div>
-        <button id="export-btn" class="ghost-button" type="button">💾 Save backup</button>
-        <button id="import-btn" class="ghost-button" type="button">📥 Restore backup</button>
-        <button id="clear-done-btn" class="ghost-button" type="button">Clear archive</button>
-        <input type="file" id="import-file" accept=".json" style="display:none" />
+        <div class="archive-actions">
+          <button id="backup-btn" class="ghost-button" type="button">Backup now</button>
+          <button id="restore-btn" class="ghost-button" type="button">Restore backup</button>
+          <button id="clear-done-btn" class="ghost-button" type="button">Clear archive</button>
+        </div>
       </div>
+      <input id="backup-file-input" type="file" accept="application/json,.json" hidden />
       <div id="archive-list" class="archive-list"></div>
     </section>
+
   </div>
 
   <template id="zone-template">

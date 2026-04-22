@@ -283,6 +283,14 @@ input:focus, select:focus {
   background: rgba(255, 107, 0, 0.12);
   color: #FFB37A;
 }
+.edit-btn {
+  color: #FFB37A !important;
+  border-color: rgba(255, 107, 0, 0.3) !important;
+}
+.edit-btn:hover {
+  background: rgba(255, 107, 0, 0.12) !important;
+  border-color: #FF6B00 !important;
+}
 .delete-btn {
   color: #F85149 !important;
   border-color: rgba(248, 81, 73, 0.3) !important;
@@ -290,6 +298,39 @@ input:focus, select:focus {
 .delete-btn:hover {
   background: rgba(248, 81, 73, 0.12) !important;
   border-color: #F85149 !important;
+}
+.edit-input {
+  width: 100%;
+  background: #0D1117;
+  border: 1px solid #FF6B00;
+  border-radius: 10px;
+  color: #E6EDF3;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+}
+.edit-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+.edit-priority {
+  background: #0D1117;
+  border: 1px solid #30363D;
+  border-radius: 10px;
+  color: #E6EDF3;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+.save-edit-btn {
+  border-color: #FF6B00 !important;
+  color: #FF6B00 !important;
+  font-weight: 700;
+}
+.save-edit-btn:hover {
+  background: rgba(255, 107, 0, 0.12) !important;
 }
 
 @media (max-width: 1024px) {
