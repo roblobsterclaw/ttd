@@ -1,16 +1,21 @@
 {
-  "version": "3.9",
-  "lastUpdated": "2026-04-22T11:32:00-04:00",
+  "version": "4.0",
+  "lastUpdated": "2026-04-22T14:45:00-04:00",
   "zones": [
     {
       "id": "fire",
       "title": "ON FIRE THIS WEEK",
       "emoji": "🔥",
       "items": [
-        { "id": "april-30-portfolio-execution", "text": "April 30 portfolio execution (8 days)", "priority": "urgent", "status": "open" },
-        { "id": "surfbox-social-launch", "text": "Surfbox social media launch (8 days)", "priority": "urgent", "status": "open" },
-        { "id": "brad-architect-email", "text": "Brad architect email (Thursday)", "priority": "urgent", "status": "open" },
-        { "id": "joey-young-spreadsheet", "text": "Joey Young spreadsheet [WAITING]", "priority": "waiting", "status": "open" }
+        { "id": "april-30-portfolio-execution", "text": "April 30 portfolio execution — 8 DAYS AWAY", "priority": "urgent", "status": "open" },
+        { "id": "surfbox-video-not-filmed", "text": "Surfbox: Video NOT filmed — 8 days to Apr 30 deadline", "priority": "urgent", "status": "open" },
+        { "id": "surfbox-assign-filmmaker", "text": "Surfbox: Assign video filmmaker NOW — 8 days to Apr 30", "priority": "urgent", "status": "open" },
+        { "id": "surfbox-google-ads", "text": "Surfbox: Google Ads account ($1K/mo) — setup before Apr 30", "priority": "urgent", "status": "open" },
+        { "id": "surfbox-go-live-prep", "text": "Surfbox go-live readiness", "priority": "urgent", "status": "open" },
+        { "id": "brad-architect-email", "text": "Brad architect email Thursday", "priority": "pending", "status": "open" },
+        { "id": "lobster-press-buffer", "text": "Lobster Press: Buffer acct + forwarding rule (Joe action)", "priority": "pending", "status": "open" },
+        { "id": "rebolt-patent-decision", "text": "ReBolt provisional patent — go/no-go decision needed", "priority": "pending", "status": "open" },
+        { "id": "unicorn-scout-review", "text": "Unicorn Scout findings ready — review AI biz ideas", "priority": "pending", "status": "open" }
       ]
     },
     {
@@ -18,11 +23,12 @@
       "title": "TLC / SURFBOX",
       "emoji": "🪵",
       "items": [
-        { "id": "surfbox-go-live-prep", "text": "Surfbox go-live prep", "priority": "pending", "status": "open" },
-        { "id": "tariff-pricing-review", "text": "Tariff pricing review", "priority": "pending", "status": "open" },
-        { "id": "joey-young-spreadsheet-2", "text": "Joey Young spreadsheet [WAITING]", "priority": "waiting", "status": "open" },
-        { "id": "surf-city-audit", "text": "Surf City audit", "priority": "pending", "status": "open" },
-        { "id": "neal-denise-prospecting", "text": "Neal/Denise prospecting check-in", "priority": "pending", "status": "open" }
+        { "id": "joey-young-spreadsheet", "text": "Joey Young spreadsheet [WAITING] (commission + inventory)", "priority": "waiting", "status": "open" },
+        { "id": "tariff-pricing-review", "text": "Tariff pricing hold and margin watch", "priority": "pending", "status": "open" },
+        { "id": "epicor-minmax", "text": "Epicor Min/Max system — Edwin + Joey leading", "priority": "pending", "status": "open" },
+        { "id": "surf-city-audit", "text": "Surf City margin audit in Epicor (Paul)", "priority": "pending", "status": "open" },
+        { "id": "neal-denise-prospecting", "text": "Neal/Denise follow-up", "priority": "pending", "status": "open" },
+        { "id": "obx-pipeline", "text": "OBX pipeline — zero new rentals Jan-Feb, investigate", "priority": "pending", "status": "open" }
       ]
     },
     {
@@ -30,10 +36,12 @@
       "title": "FIREHOUSE — 18 NEW ST",
       "emoji": "🏗️",
       "items": [
-        { "id": "mike-plumber-followup", "text": "Mike plumber follow-up", "priority": "pending", "status": "open" },
-        { "id": "brad-architect-coordination", "text": "Brad architect coordination", "priority": "pending", "status": "open" },
-        { "id": "certificate-of-compliance", "text": "Certificate of Compliance", "priority": "pending", "status": "open" },
+        { "id": "pmk-invoice", "text": "PMK invoice $13,750 — pay from JLKL TD Bank", "priority": "urgent", "status": "open" },
+        { "id": "mike-plumber-schedule", "text": "Schedule Mike the plumber (Code Official walk-through)", "priority": "urgent", "status": "open" },
+        { "id": "hvac-contractor", "text": "HVAC: finalize contractor (furnace + heat pump)", "priority": "pending", "status": "open" },
+        { "id": "phil-reed-certificate", "text": "Phil Reed: Certificate of Compliance + $150 fee", "priority": "pending", "status": "open" },
         { "id": "matty-electrical-work", "text": "Matty electrical work", "priority": "pending", "status": "open" },
+        { "id": "historic-tax-credit", "text": "Historic tax credit (National Register) — CPA review", "priority": "pending", "status": "open" },
         { "id": "section-47-tax-credit", "text": "Section 47 tax credit research", "priority": "pending", "status": "open" }
       ]
     },
@@ -42,9 +50,14 @@
       "title": "INVESTING — JFL&KL FUND",
       "emoji": "💰",
       "items": [
-        { "id": "april-30-execution", "text": "April 30 execution — 8 day countdown", "priority": "urgent", "status": "open" },
-        { "id": "macarthur-w2-roth-401k", "text": "MacArthur W-2/Roth 401k discussion", "priority": "pending", "status": "open" },
-        { "id": "sp-monitoring", "text": "S&P monitoring vs exit baseline (6,591.90)", "priority": "pending", "status": "open" }
+        { "id": "april-30-execution", "text": "APRIL 30 — Execution Day, 8 DAYS, 29 stocks ready", "priority": "urgent", "status": "open" },
+        { "id": "stagger-deployment", "text": "Stagger deployment — 3 tranches over 3 days", "priority": "urgent", "status": "open" },
+        { "id": "schwab-transfer", "text": "Schwab: assets transferred out Apr 17 — verify receipt", "priority": "pending", "status": "open" },
+        { "id": "macarthur-w2-roth-401k", "text": "Roth 401k: Move to W-2 salary (MacArthur coordinate)", "priority": "pending", "status": "open" },
+        { "id": "baba-position", "text": "BABA position: size carefully (Tepper/Burry/Spier hold)", "priority": "pending", "status": "open" },
+        { "id": "q1-13f-filings", "text": "Q1 2026 13F filings due May 15 — monitor", "priority": "pending", "status": "open" },
+        { "id": "sp-monitoring", "text": "S&P monitoring vs exit baseline (6,591.90)", "priority": "pending", "status": "open" },
+        { "id": "cash-deployment", "text": "Cash deployment discipline", "priority": "pending", "status": "open" }
       ]
     },
     {
@@ -52,11 +65,12 @@
       "title": "FAMILY / PERSONAL",
       "emoji": "🏠",
       "items": [
-        { "id": "gio-225-check", "text": "Gio $225 check (TEXT TOMMY)", "priority": "pending", "status": "open" },
-        { "id": "jersey-appliance", "text": "Jersey Appliance call 609-918-1830", "priority": "pending", "status": "open" },
-        { "id": "truck-key-rings", "text": "Truck key rings [WAITING ON LJ]", "priority": "waiting", "status": "open" },
-        { "id": "juliana-summer-job", "text": "Juliana summer job planning", "priority": "pending", "status": "open" },
-        { "id": "bella-openclaw-setup", "text": "Bella OpenClaw setup", "priority": "pending", "status": "open" }
+        { "id": "gio-225-check", "text": "TEXT TOMMY — did Gio cut $225 check?", "priority": "urgent", "status": "open" },
+        { "id": "jersey-appliance", "text": "Call Jersey Appliance — 609-918-1830 (Thermador hood)", "priority": "pending", "status": "open" },
+        { "id": "truck-key-rings", "text": "Key rings [WAITING ON LJ] (5 rings organized)", "priority": "waiting", "status": "open" },
+        { "id": "juliana-summer-job", "text": "Jules: summer waitressing job plan — talk to her", "priority": "pending", "status": "open" },
+        { "id": "bella-openclaw-setup", "text": "Bella: set up her OpenClaw + AI education", "priority": "pending", "status": "open" },
+        { "id": "voice-clone-renee", "text": "Rob Lobster voice clone — talk to Renee first", "priority": "waiting", "status": "open" }
       ]
     },
     {
@@ -65,10 +79,26 @@
       "emoji": "🚀",
       "items": [
         { "id": "rebolt-renders", "text": "ReBolt renders", "priority": "pending", "status": "open" },
-        { "id": "provisional-patent", "text": "Provisional patent", "priority": "pending", "status": "open" },
-        { "id": "elevenlabs-voice", "text": "ElevenLabs voice setup", "priority": "pending", "status": "open" },
-        { "id": "voice-clone", "text": "Voice clone (TALK TO RENEE FIRST)", "priority": "waiting", "status": "open" },
-        { "id": "world-cup-pool", "text": "World Cup Pool — TeamStake $25 update", "priority": "pending", "status": "open" }
+        { "id": "rebolt-patent", "text": "ReBolt: provisional patent filing ($12-23K budget)", "priority": "pending", "status": "open" },
+        { "id": "elevenlabs-voice", "text": "ElevenLabs voice setup + voice plugin on Mac", "priority": "pending", "status": "open" },
+        { "id": "world-cup-pool", "text": "World Cup Pool — TeamStake $25 update", "priority": "pending", "status": "open" },
+        { "id": "corner-market", "text": "Corner Market 275 W 9th — deal next step?", "priority": "pending", "status": "open" },
+        { "id": "colorant-reentry", "text": "Colorant industry re-entry — timing decision", "priority": "pending", "status": "open" },
+        { "id": "t1d-app", "text": "T1D App: Dexcom-Oura integration (90-day build)", "priority": "pending", "status": "open" }
+      ]
+    },
+    {
+      "id": "lobster-press",
+      "title": "LOBSTER PRESS",
+      "emoji": "🦞",
+      "items": [
+        { "id": "lp-buffer-account", "text": "Set up Buffer account ($60-70/mo)", "priority": "pending", "status": "open" },
+        { "id": "lp-outlook-forwarding", "text": "Outlook forwarding rule: socialmedia@tlcnj.com → Rob", "priority": "pending", "status": "open" },
+        { "id": "lp-admin-access", "text": "Admin access to all social accounts", "priority": "pending", "status": "open" },
+        { "id": "lp-logos-handles", "text": "Logos + handles for TLC, Surfbox, Keli Realtor", "priority": "pending", "status": "open" },
+        { "id": "lp-dashboard-build", "text": "Lobster Press dashboard build (Hermes)", "priority": "pending", "status": "open" },
+        { "id": "lp-video-per-store", "text": "One video per store per week — April 30 go-live", "priority": "urgent", "status": "open" },
+        { "id": "lp-three-brands", "text": "Three brands: TLC, Surfbox, Keli Realtor", "priority": "pending", "status": "open" }
       ]
     }
   ]

@@ -152,6 +152,9 @@ input:focus, select:focus {
 .zone-card {
   min-height: 260px;
 }
+.zone-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
 .zone-header, .section-header {
   display: flex;
   justify-content: space-between;
