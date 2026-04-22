@@ -493,8 +493,12 @@ async function init() {
 }
 
 function registerServiceWorker() {
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  // Service worker disabled — was causing aggressive caching issues
+  // Unregister any existing one to clear stale cache
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => {
+      regs.forEach(reg => reg.unregister());
+    });
   }
 }
 

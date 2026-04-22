@@ -6,11 +6,53 @@
   <meta name="theme-color" content="#0D1117" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>JFL TTD — Dashboard</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="pw-gate" style="position:fixed;inset:0;background:#0D1117;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:40px 48px;width:320px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+    <div style="font-size:28px;margin-bottom:8px">🧦</div>
+    <h2 style="color:#FF6B00;font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:.5px">JFL TTD Dashboard</h2>
+    <p style="color:#8B949E;font-size:12px;margin-bottom:24px">Enter password to continue</p>
+    <input id="pw-input" type="password" placeholder="Password" autocomplete="current-password"
+      style="width:100%;padding:10px 14px;background:#0D1117;border:1px solid #30363D;border-radius:8px;color:#E6EDF3;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:8px"
+      onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='#30363D'"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <div id="pw-err" style="color:#F85149;font-size:12px;height:16px;margin-bottom:8px"></div>
+    <button onclick="checkPw()" style="width:100%;padding:10px;background:#FF6B00;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#FF8B33'" onmouseout="this.style.background='#FF6B00'">Enter</button>
+  </div>
+</div>
+<style>
+@keyframes pw-shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.pw-shake{animation:pw-shake .4s ease}
+</style>
+<script>
+(function(){
+  if(sessionStorage.getItem('ttd_auth')==='1'){
+    document.getElementById('pw-gate').style.display='none';
+  }
+})();
+function checkPw(){
+  var input=document.getElementById('pw-input');
+  var err=document.getElementById('pw-err');
+  if(input.value==='soccer12'){
+    sessionStorage.setItem('ttd_auth','1');
+    document.getElementById('pw-gate').style.display='none';
+  } else {
+    err.textContent='Wrong password';
+    input.style.borderColor='#F85149';
+    input.parentElement.parentElement.classList.add('pw-shake');
+    setTimeout(function(){input.parentElement.parentElement.classList.remove('pw-shake');},400);
+  }
+}
+</script>
   <div class="app-shell">
     <header class="topbar">
       <div>
