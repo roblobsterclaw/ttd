@@ -167,6 +167,10 @@ function render() {
 function renderItem(zoneId, item, index, totalItems) {
   const li = document.createElement('li');
   li.className = `item ${item.status === 'done' ? 'done' : ''}`;
+  li.draggable = true;
+  li.dataset.zoneId = zoneId;
+  li.dataset.itemId = item.id;
+  li.dataset.index = index;
 
   const metaBits = [];
   if (item.priority === 'urgent') metaBits.push('Urgent');
@@ -175,10 +179,7 @@ function renderItem(zoneId, item, index, totalItems) {
 
   li.innerHTML = `
     <button class="check" aria-label="Mark done">${item.status === 'done' ? '↺' : '☐'}</button>
-    <div class="reorder-arrows">
-      <button class="reorder-btn reorder-up" type="button" aria-label="Move up" ${index === 0 ? 'disabled' : ''}>▲</button>
-      <button class="reorder-btn reorder-down" type="button" aria-label="Move down" ${index >= totalItems - 1 ? 'disabled' : ''}>▼</button>
-    </div>
+    <div class="drag-handle" title="Drag to reorder">⠿</div>
     <div>
       <div class="item-text">${escapeHtml(item.text)}</div>
       <div class="item-meta">${priorityBadge(item)}${metaBits.map(bit => `<span class="badge">${escapeHtml(bit)}</span>`).join('')}</div>
@@ -191,18 +192,27 @@ function renderItem(zoneId, item, index, totalItems) {
   `;
 
   const checkButton = li.querySelector('.check');
-  const upButton = li.querySelector('.reorder-up');
-  const downButton = li.querySelector('.reorder-down');
   const editButton = li.querySelector('.edit-btn');
   const moveButton = li.querySelectorAll('.small-button')[1];
   const deleteButton = li.querySelector('.delete-btn');
 
   checkButton.addEventListener('click', () => toggleItem(zoneId, item.id));
-  upButton.addEventListener('click', () => moveItem(zoneId, item.id, -1));
-  downButton.addEventListener('click', () => moveItem(zoneId, item.id, 1));
   if (editButton) editButton.addEventListener('click', () => editItem(zoneId, item.id, li));
   if (moveButton) moveButton.addEventListener('click', (e) => cycleZone(zoneId, item.id, e));
   if (deleteButton) deleteButton.addEventListener('click', () => deleteItem(zoneId, item.id));
+
+  // Drag events
+  li.addEventListener('dragstart', handleDragStart);
+  li.addEventListener('dragend', handleDragEnd);
+  li.addEventListener('dragover', handleDragOver);
+  li.addEventListener('dragenter', handleDragEnter);
+  li.addEventListener('dragleave', handleDragLeave);
+  li.addEventListener('drop', handleDrop);
+
+  // Touch drag support
+  const handle = li.querySelector('.drag-handle');
+  handle.addEventListener('touchstart', handleTouchStart, { passive: false });
+
   return li;
 }
 
@@ -213,11 +223,156 @@ function moveItem(zoneId, itemId, direction) {
   if (index < 0) return;
   const newIndex = index + direction;
   if (newIndex < 0 || newIndex >= zone.items.length) return;
-  // Swap items
   const temp = zone.items[index];
   zone.items[index] = zone.items[newIndex];
   zone.items[newIndex] = temp;
   touchState();
+}
+
+// --- Drag and drop ---
+let dragState = { zoneId: null, itemId: null, sourceIndex: null };
+
+function handleDragStart(e) {
+  const li = e.currentTarget;
+  dragState.zoneId = li.dataset.zoneId;
+  dragState.itemId = li.dataset.itemId;
+  dragState.sourceIndex = parseInt(li.dataset.index, 10);
+  li.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', li.dataset.itemId);
+}
+
+function handleDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+  dragState = { zoneId: null, itemId: null, sourceIndex: null };
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDragEnter(e) {
+  e.preventDefault();
+  const li = e.currentTarget;
+  if (li.dataset.itemId !== dragState.itemId && li.dataset.zoneId === dragState.zoneId) {
+    li.classList.add('drag-over');
+  }
+}
+
+function handleDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  const targetLi = e.currentTarget;
+  targetLi.classList.remove('drag-over');
+  const targetZoneId = targetLi.dataset.zoneId;
+  const targetIndex = parseInt(targetLi.dataset.index, 10);
+
+  if (targetZoneId !== dragState.zoneId) return;
+  if (targetIndex === dragState.sourceIndex) return;
+
+  const zone = state.data.zones.find(z => z.id === dragState.zoneId);
+  if (!zone) return;
+
+  const [movedItem] = zone.items.splice(dragState.sourceIndex, 1);
+  zone.items.splice(targetIndex, 0, movedItem);
+  touchState();
+}
+
+// --- Touch drag support for mobile ---
+let touchDrag = { active: false, li: null, clone: null, zoneId: null, startY: 0, itemList: null };
+
+function handleTouchStart(e) {
+  const handle = e.currentTarget;
+  const li = handle.closest('.item');
+  if (!li) return;
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  const rect = li.getBoundingClientRect();
+  const itemList = li.closest('.item-list');
+
+  touchDrag.active = true;
+  touchDrag.li = li;
+  touchDrag.zoneId = li.dataset.zoneId;
+  touchDrag.startY = touch.clientY;
+  touchDrag.itemList = itemList;
+
+  // Create a visual clone
+  const clone = li.cloneNode(true);
+  clone.className = 'item drag-clone';
+  clone.style.position = 'fixed';
+  clone.style.left = rect.left + 'px';
+  clone.style.top = rect.top + 'px';
+  clone.style.width = rect.width + 'px';
+  clone.style.zIndex = '9999';
+  clone.style.opacity = '0.85';
+  clone.style.pointerEvents = 'none';
+  clone.style.boxShadow = '0 8px 24px rgba(0,0,0,0.4)';
+  clone.style.borderRadius = '12px';
+  clone.style.background = 'var(--card-bg)';
+  document.body.appendChild(clone);
+  touchDrag.clone = clone;
+  li.classList.add('dragging');
+
+  document.addEventListener('touchmove', handleTouchMove, { passive: false });
+  document.addEventListener('touchend', handleTouchEnd);
+}
+
+function handleTouchMove(e) {
+  if (!touchDrag.active) return;
+  e.preventDefault();
+  const touch = e.touches[0];
+  const dy = touch.clientY - touchDrag.startY;
+  const origRect = touchDrag.li.getBoundingClientRect();
+  touchDrag.clone.style.top = (origRect.top + dy) + 'px';
+
+  // Highlight the item we're hovering over
+  const items = touchDrag.itemList.querySelectorAll('.item');
+  items.forEach(item => {
+    item.classList.remove('drag-over');
+    if (item === touchDrag.li) return;
+    const r = item.getBoundingClientRect();
+    if (touch.clientY > r.top && touch.clientY < r.bottom && item.dataset.zoneId === touchDrag.zoneId) {
+      item.classList.add('drag-over');
+    }
+  });
+}
+
+function handleTouchEnd(e) {
+  if (!touchDrag.active) return;
+  document.removeEventListener('touchmove', handleTouchMove);
+  document.removeEventListener('touchend', handleTouchEnd);
+
+  // Find the drop target
+  const items = touchDrag.itemList.querySelectorAll('.item');
+  let dropTarget = null;
+  items.forEach(item => {
+    if (item.classList.contains('drag-over')) dropTarget = item;
+    item.classList.remove('drag-over');
+  });
+
+  if (touchDrag.clone) touchDrag.clone.remove();
+  touchDrag.li.classList.remove('dragging');
+
+  if (dropTarget && dropTarget.dataset.zoneId === touchDrag.zoneId) {
+    const zone = state.data.zones.find(z => z.id === touchDrag.zoneId);
+    if (zone) {
+      const fromIdx = parseInt(touchDrag.li.dataset.index, 10);
+      const toIdx = parseInt(dropTarget.dataset.index, 10);
+      if (fromIdx !== toIdx) {
+        const [movedItem] = zone.items.splice(fromIdx, 1);
+        zone.items.splice(toIdx, 0, movedItem);
+        touchState();
+      }
+    }
+  }
+
+  touchDrag = { active: false, li: null, clone: null, zoneId: null, startY: 0, itemList: null };
 }
 
 function renderArchive() {

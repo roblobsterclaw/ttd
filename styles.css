@@ -360,37 +360,42 @@ input:focus, select:focus {
   padding: 12px 0 4px;
 }
 
-/* Reorder arrow buttons */
-.reorder-arrows {
+/* Drag handle */
+.drag-handle {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
   align-items: center;
   justify-content: center;
-}
-.reorder-btn {
-  width: 22px;
-  height: 18px;
-  border: 1px solid var(--border);
-  background: var(--input-bg);
+  width: 24px;
+  height: 28px;
   color: var(--text-secondary);
-  border-radius: 5px;
-  font-size: 10px;
-  line-height: 1;
-  padding: 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.2s, color 0.2s, background-color 0.2s, opacity 0.2s;
+  font-size: 16px;
+  cursor: grab;
+  user-select: none;
+  border-radius: 6px;
+  transition: color 0.15s, background-color 0.15s;
+  flex-shrink: 0;
 }
-.reorder-btn:hover:not(:disabled) {
-  border-color: var(--accent);
+.drag-handle:hover {
   color: var(--accent);
+  background: var(--accent-bg);
 }
-.reorder-btn:disabled {
-  opacity: 0.25;
-  cursor: default;
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Drag states */
+.item.dragging {
+  opacity: 0.3;
+}
+.item.drag-over {
+  border-top: 2px solid var(--accent);
+  padding-top: 10px;
+  background: var(--accent-bg);
+  border-radius: 8px;
+}
+.drag-clone {
+  padding: 12px;
+  border: 1px solid var(--accent);
 }
 
 .move-menu {
@@ -491,5 +496,5 @@ input:focus, select:focus {
   .stats-row { grid-template-columns: 1fr 1fr; }
   .item { grid-template-columns: auto auto 1fr; }
   .item-actions { grid-column: 1 / -1; }
-  .reorder-btn { width: 20px; height: 16px; font-size: 9px; }
+  .drag-handle { width: 20px; height: 24px; font-size: 14px; }
 }
