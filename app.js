@@ -1,5 +1,6 @@
 const STORAGE_KEY = 'jfl-ttd-dashboard-state-v3';
 const ARCHIVE_KEY = 'jfl-ttd-dashboard-archive-v3';
+const THEME_KEY = 'jfl-ttd-theme';
 
 const defaultData = {
   version: '4.2',
@@ -26,10 +27,11 @@ const els = {
   newItemText: document.getElementById('new-item-text'),
   newItemPriority: document.getElementById('new-item-priority'),
   addButton: document.getElementById('add-item-btn'),
-  backupButton: document.getElementById('backup-btn'),
-  restoreButton: document.getElementById('restore-btn'),
-  backupFileInput: document.getElementById('backup-file-input'),
-  clearDoneButton: document.getElementById('clear-done-btn')
+  exportButton: document.getElementById('export-btn'),
+  importButton: document.getElementById('import-btn'),
+  importFile: document.getElementById('import-file'),
+  clearDoneButton: document.getElementById('clear-done-btn'),
+  themeToggle: document.getElementById('theme-toggle')
 };
 
 function safeJsonParse(value, fallback) {
@@ -152,7 +154,7 @@ function render() {
       <ul class="item-list"></ul>
     `;
     const list = card.querySelector('.item-list');
-    zone.items.forEach(item => list.appendChild(renderItem(zone.id, item)));
+    zone.items.forEach((item, index) => list.appendChild(renderItem(zone.id, item, index, zone.items.length)));
     els.grid.appendChild(card);
   });
 
@@ -162,7 +164,7 @@ function render() {
   populateZoneSelect();
 }
 
-function renderItem(zoneId, item) {
+function renderItem(zoneId, item, index, totalItems) {
   const li = document.createElement('li');
   li.className = `item ${item.status === 'done' ? 'done' : ''}`;
 
@@ -173,6 +175,10 @@ function renderItem(zoneId, item) {
 
   li.innerHTML = `
     <button class="check" aria-label="Mark done">${item.status === 'done' ? '↺' : '☐'}</button>
+    <div class="reorder-arrows">
+      <button class="reorder-btn reorder-up" type="button" aria-label="Move up" ${index === 0 ? 'disabled' : ''}>▲</button>
+      <button class="reorder-btn reorder-down" type="button" aria-label="Move down" ${index >= totalItems - 1 ? 'disabled' : ''}>▼</button>
+    </div>
     <div>
       <div class="item-text">${escapeHtml(item.text)}</div>
       <div class="item-meta">${priorityBadge(item)}${metaBits.map(bit => `<span class="badge">${escapeHtml(bit)}</span>`).join('')}</div>
@@ -184,13 +190,34 @@ function renderItem(zoneId, item) {
     </div>
   `;
 
-  const buttons = li.querySelectorAll('button');
-  const [checkButton, editButton, moveButton, deleteButton] = buttons;
+  const checkButton = li.querySelector('.check');
+  const upButton = li.querySelector('.reorder-up');
+  const downButton = li.querySelector('.reorder-down');
+  const editButton = li.querySelector('.edit-btn');
+  const moveButton = li.querySelectorAll('.small-button')[1];
+  const deleteButton = li.querySelector('.delete-btn');
+
   checkButton.addEventListener('click', () => toggleItem(zoneId, item.id));
+  upButton.addEventListener('click', () => moveItem(zoneId, item.id, -1));
+  downButton.addEventListener('click', () => moveItem(zoneId, item.id, 1));
   if (editButton) editButton.addEventListener('click', () => editItem(zoneId, item.id, li));
   if (moveButton) moveButton.addEventListener('click', (e) => cycleZone(zoneId, item.id, e));
   if (deleteButton) deleteButton.addEventListener('click', () => deleteItem(zoneId, item.id));
   return li;
+}
+
+function moveItem(zoneId, itemId, direction) {
+  const zone = state.data.zones.find(z => z.id === zoneId);
+  if (!zone) return;
+  const index = zone.items.findIndex(i => i.id === itemId);
+  if (index < 0) return;
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= zone.items.length) return;
+  // Swap items
+  const temp = zone.items[index];
+  zone.items[index] = zone.items[newIndex];
+  zone.items[newIndex] = temp;
+  touchState();
 }
 
 function renderArchive() {
@@ -441,7 +468,7 @@ function exportBackup() {
 }
 
 function importBackup() {
-  document.getElementById('import-file').click();
+  els.importFile.click();
 }
 
 function handleImport(event) {
@@ -469,18 +496,54 @@ function handleImport(event) {
   event.target.value = '';
 }
 
+// --- Theme toggle ---
+function isLightMode() {
+  return document.body.classList.contains('light-mode');
+}
+
+function applyTheme(light) {
+  if (light) {
+    document.body.classList.add('light-mode');
+  } else {
+    document.body.classList.remove('light-mode');
+  }
+  // Update toggle button icon
+  if (els.themeToggle) {
+    els.themeToggle.textContent = light ? '☀️' : '🌙';
+    els.themeToggle.title = light ? 'Switch to dark mode' : 'Switch to light mode';
+  }
+  // Update meta theme-color
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.content = light ? '#F6F8FA' : '#0D1117';
+  }
+  // Save preference
+  localStorage.setItem(THEME_KEY, light ? 'light' : 'dark');
+}
+
+function toggleTheme() {
+  applyTheme(!isLightMode());
+}
+
 function wireEvents() {
   els.addButton.addEventListener('click', addItem);
   els.newItemText.addEventListener('keydown', event => {
     if (event.key === 'Enter') addItem();
   });
   els.clearDoneButton.addEventListener('click', clearArchive);
-  document.getElementById('export-btn').addEventListener('click', exportBackup);
-  document.getElementById('import-btn').addEventListener('click', importBackup);
-  document.getElementById('import-file').addEventListener('change', handleImport);
+  els.exportButton.addEventListener('click', exportBackup);
+  els.importButton.addEventListener('click', importBackup);
+  els.importFile.addEventListener('change', handleImport);
+  if (els.themeToggle) {
+    els.themeToggle.addEventListener('click', toggleTheme);
+  }
 }
 
 async function init() {
+  // Apply theme before render
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  applyTheme(savedTheme === 'light');
+
   const { archive } = loadStoredState();
   state.archive = Array.isArray(archive) ? archive : [];
   // ALWAYS fetch the server JSON first, then merge localStorage on top

@@ -12,20 +12,29 @@
   <title>JFL TTD — Dashboard</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply saved theme BEFORE render to avoid flash
+    (function() {
+      var theme = localStorage.getItem('jfl-ttd-theme');
+      if (theme === 'light') {
+        document.documentElement.classList.add('light-mode-pending');
+      }
+    })();
+  </script>
 </head>
 <body>
 
 <!-- PASSWORD GATE -->
-<div id="pw-gate" style="position:fixed;inset:0;background:#0D1117;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
-  <div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:40px 48px;width:320px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+<div id="pw-gate" style="position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg)">
+  <div class="pw-card" style="background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:40px 48px;width:320px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.6)">
     <div style="font-size:28px;margin-bottom:8px">🧦</div>
-    <h2 style="color:#FF6B00;font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:.5px">JFL TTD Dashboard</h2>
-    <p style="color:#8B949E;font-size:12px;margin-bottom:24px">Enter password to continue</p>
+    <h2 style="color:var(--accent);font-size:18px;font-weight:700;margin-bottom:4px;letter-spacing:.5px">JFL TTD Dashboard</h2>
+    <p style="color:var(--text-secondary);font-size:12px;margin-bottom:24px">Enter password to continue</p>
     <input id="pw-input" type="password" placeholder="Password" autocomplete="current-password"
-      style="width:100%;padding:10px 14px;background:#0D1117;border:1px solid #30363D;border-radius:8px;color:#E6EDF3;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:8px"
-      onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='#30363D'"
+      style="width:100%;padding:10px 14px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s;margin-bottom:8px"
+      onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"
       onkeydown="if(event.key==='Enter')checkPw()">
-    <div id="pw-err" style="color:#F85149;font-size:12px;height:16px;margin-bottom:8px"></div>
+    <div id="pw-err" style="color:var(--error-color);font-size:12px;height:16px;margin-bottom:8px"></div>
     <button onclick="checkPw()" style="width:100%;padding:10px;background:#FF6B00;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s" onmouseover="this.style.background='#FF8B33'" onmouseout="this.style.background='#FF6B00'">Enter</button>
   </div>
 </div>
@@ -35,6 +44,10 @@
 </style>
 <script>
 (function(){
+  // Apply light mode class to body immediately if saved
+  if(localStorage.getItem('jfl-ttd-theme')==='light'){
+    document.body.classList.add('light-mode');
+  }
   if(sessionStorage.getItem('ttd_auth')==='1'){
     document.getElementById('pw-gate').style.display='none';
   }
@@ -47,7 +60,7 @@ function checkPw(){
     document.getElementById('pw-gate').style.display='none';
   } else {
     err.textContent='Wrong password';
-    input.style.borderColor='#F85149';
+    input.style.borderColor='var(--error-color)';
     input.parentElement.parentElement.classList.add('pw-shake');
     setTimeout(function(){input.parentElement.parentElement.classList.remove('pw-shake');},400);
   }
@@ -61,6 +74,7 @@ function checkPw(){
         <p class="subtitle">Live companion to the printed TTD. Tap to complete, add new items, and keep the day moving.</p>
       </div>
       <div class="topbar-meta">
+        <button id="theme-toggle" class="theme-toggle" type="button" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌙</button>
         <div class="meta-pill" id="version-pill">v3.9</div>
         <div class="meta-pill" id="updated-pill">Updated —</div>
         <div class="meta-pill" id="storage-pill">Local-first</div>
@@ -106,12 +120,12 @@ function checkPw(){
           <p>Completed items stay here with a completion stamp.</p>
         </div>
         <div class="archive-actions">
-          <button id="backup-btn" class="ghost-button" type="button">Backup now</button>
-          <button id="restore-btn" class="ghost-button" type="button">Restore backup</button>
+          <button id="export-btn" class="ghost-button" type="button">Backup now</button>
+          <button id="import-btn" class="ghost-button" type="button">Restore backup</button>
           <button id="clear-done-btn" class="ghost-button" type="button">Clear archive</button>
         </div>
       </div>
-      <input id="backup-file-input" type="file" accept="application/json,.json" hidden />
+      <input id="import-file" type="file" accept="application/json,.json" hidden />
       <div id="archive-list" class="archive-list"></div>
     </section>
 
